@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRANGE | About</title>
+    <meta name="description" content="About FRANGE - Audio Visual Artist.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syncopate:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: flicker 6s infinite;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.3rem;
+            color: #8888ff;
+            margin: 3rem 0;
+            padding: 0 2rem;
+            border-left: 2px solid #8888ff;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid #fff;
+            padding: 10px 20px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .back-link:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        @keyframes flicker {
+
+            0%,
+            18%,
+            22%,
+            25%,
+            53%,
+            57%,
+            100% {
+                opacity: 1;
+            }
+
+            20%,
+            24%,
+            55% {
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer">
+        <div class="container">
+            <h1>About FRΔNGE</h1>
+
+            <div class="quote">
+                "In a world where everyone tries to be something, be nothing. Let your destination be nothingness.<br>
+                Just as it is not the shape of the pot that holds it together but the space within,<br>
+                so it is not the ego that sustains a person, but the consciousness of nothingness." <br>
+                ― Shams Tabrizi
+            </div>
+
+            <p>
+                FRANGE is an audio-visual project blending deep electronic beats with immersive visual experiences.
+                Based in Istanbul, FRANGE explores the boundaries between live performance, DJing, and VJing using
+                custom setups and reactive visuals.
+            </p>
+            <p>
+                From "Intimate" to "Aura", and now the latest single "Electric Whispers", the journey is about
+                creating atmospheres that resonate with the inner void and the electric soul.
+            </p>
+
+            <a href="index.html" class="back-link">Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Three.js and Post Processing -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+        }
+      }
+    </script>
+
+    <script type="module">
+        import { initBackground } from './bg.js';
+        initBackground('canvas-container');
+    </script>
+</body>
+
+</html>
