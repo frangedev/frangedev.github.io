@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRANGE | UZAY // SPACE</title>
+  <meta name="description" content="Listen to UZAY // SPACE by FRANGE.">
+  <link rel="canonical" href="https://frangedev.github.io/uzay-space.html">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:title" content="FRANGE — UZAY // SPACE">
+  <meta property="og:description" content="New album by FRANGE. Choose your platform and listen now.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://frangedev.github.io/uzay-space.html">
+  <meta property="og:image" content="https://i.scdn.co/image/ab67616d0000b2733ead8c7ef5fe9dba442bec6e">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FRANGE — UZAY // SPACE">
+  <meta name="twitter:description" content="New album by FRANGE. Choose your platform and listen now.">
+  <meta name="twitter:image" content="https://i.scdn.co/image/ab67616d0000b2733ead8c7ef5fe9dba442bec6e">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicAlbum",
+      "name": "UZAY // SPACE",
+      "byArtist": {
+        "@type": "MusicGroup",
+        "name": "FRANGE",
+        "sameAs": [
+          "https://open.spotify.com/artist/5JSoQOboasz7QlHN5s8P5n",
+          "https://music.apple.com/us/artist/frange/969134207",
+          "https://music.youtube.com/channel/UCyL-isYaO8QZqvRo8DLOB9Q"
+        ]
+      },
+      "url": "https://frangedev.github.io/uzay-space.html",
+      "track": [
+        { "@type": "MusicRecording", "name": "Voltage Decay" },
+        { "@type": "MusicRecording", "name": "Graviton Drift" },
+        { "@type": "MusicRecording", "name": "Cold Orbit" },
+        { "@type": "MusicRecording", "name": "Dark Frequency" },
+        { "@type": "MusicRecording", "name": "Broken Signal" },
+        { "@type": "MusicRecording", "name": "Event Horizon" },
+        { "@type": "MusicRecording", "name": "Dead Circuit" },
+        { "@type": "MusicRecording", "name": "Noise Transmission" }
+      ],
+      "sameAs": [
+        "https://open.spotify.com/album/0kpr1c1Bh0TuL87p9mrLL1",
+        "https://music.youtube.com/playlist?list=OLAK5uy_lcu26K-sO_w4ngADv2J5pDJLMXdsDlO0s",
+        "https://music.apple.com/us/album/uzay-space/1891783143"
+      ]
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syncopate:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #050505;
+      color: #ffffff;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    #canvas-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    #ui-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      overflow-y: auto;
+      background:
+        radial-gradient(1100px 700px at 50% 0%, rgba(255, 255, 255, 0.10), transparent 60%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.72) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .top-nav {
+      width: min(980px, calc(100% - 3rem));
+      margin: 2rem auto 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+      font-size: 0.9rem;
+      transition: color 0.3s, text-shadow 0.3s;
+      padding: 10px 0;
+      pointer-events: auto;
+    }
+
+    .nav-link:hover {
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .container {
+      max-width: 980px;
+      padding: 3.5rem 1.5rem 4rem;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Syncopate', sans-serif;
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
+      margin: 2.25rem 0 0.75rem;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      animation: flicker 6s infinite;
+      letter-spacing: 0.22rem;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.78);
+      letter-spacing: 0.16rem;
+      margin: 0 auto 1.65rem;
+      max-width: 760px;
+      line-height: 1.8;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.06);
+      text-transform: uppercase;
+      letter-spacing: 0.18rem;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero {
+      padding-top: 0.75rem;
+    }
+
+    .cta-row {
+      display: grid;
+      gap: 0.85rem;
+      max-width: 640px;
+      margin: 1.35rem auto 0;
+    }
+
+    .cta-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1.05rem 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.14rem;
+      font-size: 0.95rem;
+      background: rgba(255, 255, 255, 0.06);
+      transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      pointer-events: auto;
+      backdrop-filter: blur(8px);
+    }
+
+    .cta-primary:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 34px rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.95rem 1.05rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      letter-spacing: 0.12rem;
+      font-size: 0.85rem;
+      background: rgba(0, 0, 0, 0.18);
+      transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      pointer-events: auto;
+      backdrop-filter: blur(6px);
+      text-transform: uppercase;
+    }
+
+    .cta-secondary:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 22px rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .section {
+      margin-top: 3.25rem;
+      text-align: left;
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+      padding-top: 2.25rem;
+    }
+
+    .section-title {
+      text-transform: uppercase;
+      letter-spacing: 0.18rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0 0 1rem;
+    }
+
+    .platforms {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .card {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(6px);
+      padding: 1.25rem 1.25rem 1.5rem;
+      text-align: left;
+    }
+
+    .card h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.1rem;
+      letter-spacing: 0.12rem;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .links {
+      display: grid;
+      gap: 0.65rem;
+      margin-top: 0.5rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.85rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+      font-size: 0.9rem;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      pointer-events: auto;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .pill:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.45);
+      box-shadow: 0 0 26px rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .pill small {
+      opacity: 0.75;
+      font-size: 0.75rem;
+      letter-spacing: 0.08rem;
+      text-transform: none;
+    }
+
+    .note {
+      margin-top: 2.5rem;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.8;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .tracklist {
+      margin: 0.75rem 0 0;
+      padding-left: 1.2rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.9;
+    }
+
+    .tracklist li {
+      margin: 0.15rem 0;
+    }
+
+    .tracklist a {
+      color: rgba(255, 255, 255, 0.92);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      transition: border-color 0.2s ease, color 0.2s ease;
+      pointer-events: auto;
+    }
+
+    .tracklist a:hover {
+      color: #fff;
+      border-bottom-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .trackrow {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: baseline;
+      padding-right: 0.25rem;
+    }
+
+    .tracktime {
+      color: rgba(255, 255, 255, 0.65);
+      letter-spacing: 0.06rem;
+      font-size: 0.85rem;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    footer {
+      margin-top: 3.5rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.62);
+      line-height: 1.7;
+      letter-spacing: 0.06rem;
+      font-size: 0.85rem;
+    }
+
+    @keyframes flicker {
+      0%,
+      18%,
+      22%,
+      25%,
+      53%,
+      57%,
+      100% {
+        opacity: 1;
+      }
+
+      20%,
+      24%,
+      55% {
+        opacity: 0.7;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .platforms {
+        grid-template-columns: 1fr;
+      }
+
+      .top-nav {
+        width: calc(100% - 2.25rem);
+      }
+
+      .container {
+        padding: 2.5rem 1.125rem 3.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="canvas-container"></div>
+
+  <div id="ui-layer">
+    <div class="top-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+    </div>
+
+    <div class="container">
+      <div class="hero">
+        <div class="kicker">New album</div>
+        <h1>UZAY // SPACE</h1>
+        <div class="subtitle">
+          Album by <strong>FRΔNGE</strong>. Choose your platform and listen now.
+        </div>
+
+        <div class="cta-row">
+          <a class="cta-primary" href="https://open.spotify.com/album/0kpr1c1Bh0TuL87p9mrLL1" target="_blank"
+            rel="noopener">
+            <i class="fab fa-spotify"></i>
+            <span>Listen on Spotify</span>
+          </a>
+          <a class="cta-primary"
+            href="https://music.youtube.com/playlist?list=OLAK5uy_lcu26K-sO_w4ngADv2J5pDJLMXdsDlO0s" target="_blank"
+            rel="noopener">
+            <i class="fab fa-youtube"></i>
+            <span>Listen on YouTube Music</span>
+          </a>
+          <a class="cta-primary" href="https://music.apple.com/us/album/uzay-space/1891783143"
+            target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-apple"></i>
+            <span>Listen on Apple Music</span>
+          </a>
+
+          <a class="cta-secondary" href="https://open.spotify.com/artist/5JSoQOboasz7QlHN5s8P5n" target="_blank"
+            rel="noopener">
+            <span>Follow FRANGE on Spotify</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Links</div>
+        <div class="platforms">
+          <div class="card">
+            <h2><i class="fab fa-spotify"></i> Spotify</h2>
+            <div class="links">
+              <a class="pill" href="https://open.spotify.com/album/0kpr1c1Bh0TuL87p9mrLL1" target="_blank"
+                rel="noopener">
+                <span>Play (Songs)</span>
+                <small>Album</small>
+              </a>
+              <a class="pill" href="https://open.spotify.com/artist/5JSoQOboasz7QlHN5s8P5n" target="_blank"
+                rel="noopener">
+                <span>Artist</span>
+                <small>FRANGE</small>
+              </a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2><i class="fab fa-youtube"></i> YouTube Music</h2>
+            <div class="links">
+              <a class="pill"
+                href="https://music.youtube.com/playlist?list=OLAK5uy_lcu26K-sO_w4ngADv2J5pDJLMXdsDlO0s"
+                target="_blank" rel="noopener">
+                <span>Play (Songs)</span>
+                <small>Playlist / Album</small>
+              </a>
+              <a class="pill" href="https://music.youtube.com/channel/UCyL-isYaO8QZqvRo8DLOB9Q" target="_blank"
+                rel="noopener">
+                <span>Artist</span>
+                <small>FRANGE</small>
+              </a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2><i class="fab fa-apple"></i> Apple Music</h2>
+            <div class="links">
+              <a class="pill" href="https://music.apple.com/us/album/uzay-space/1891783143"
+                target="_blank" rel="noopener noreferrer">
+                <span>Play (Songs)</span>
+                <small>Album</small>
+              </a>
+              <a class="pill" href="https://music.apple.com/us/album/uzay-space/1891783143"
+                target="_blank" rel="noopener noreferrer">
+                <span>Album</span>
+                <small>UZAY // SPACE</small>
+              </a>
+              <a class="pill" href="itmss://music.apple.com/us/album/uzay-space/1891783143">
+                <span>Open in Apple Music app</span>
+                <small>Album</small>
+              </a>
+              <a class="pill" href="https://music.apple.com/us/artist/frange/969134207" target="_blank"
+                rel="noopener noreferrer">
+                <span>Artist</span>
+                <small>FRANGE</small>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Tracklist</div>
+        <ol class="tracklist">
+          <li>
+            <div class="trackrow">
+              <a href="https://open.spotify.com/track/69kxVcDBpRkADfQxoXpsPN" target="_blank"
+                rel="noopener noreferrer">Voltage Decay</a>
+              <span class="tracktime">7:33</span>
+            </div>
+          </li>
+          <li>
+            <div class="trackrow">
+              <a href="https://open.spotify.com/track/4XqYN2H4jDINmI6j5Pt8JM" target="_blank"
+                rel="noopener noreferrer">Graviton Drift</a>
+              <span class="tracktime">3:54</span>
+            </div>
+          </li>
+          <li>
+            <div class="trackrow">
+              <a href="https://open.spotify.com/track/3o546agGxBdWhfpL2A9ULz" target="_blank"
+                rel="noopener noreferrer">Cold Orbit</a>
+              <span class="tracktime">5:28</span>
+            </div>
+          </li>
+          <li>
+            <div class="trackrow">
+              <a href="https://open.spotify.com/track/25IIfaGxiFp2Z6ujEEaWkq" target="_blank"
+                rel="noopener noreferrer">Dark Frequency</a>
+              <span class="tracktime">4:25</span>
+            </div>
+          </li>
+          <li>
+            <div class="trackrow">
+              <a href="https://open.spotify.com/track/6Xlur3VpCqMYoiemdmmzLs" target="_blank"
+                rel="noopener noreferrer">Broken Signal</a>
+              <span class="tracktime">6:15</span>
+            </div>
+          </li>
+          <li>
+            <div class="trackrow">
+              <a href="https://open.spotify.com/track/3gmrq3c7xG0aJ5eVnu94H1" target="_blank"
+                rel="noopener noreferrer">Event Horizon</a>
+              <span class="tracktime">7:37</span>
+            </div>
+          </li>
+          <li>
+            <div class="trackrow">
+              <a href="https://open.spotify.com/track/5TgPUMmkN2iWvNz7sz4p6m" target="_blank"
+                rel="noopener noreferrer">Dead Circuit</a>
+              <span class="tracktime">6:34</span>
+            </div>
+          </li>
+          <li>
+            <div class="trackrow">
+              <a href="https://open.spotify.com/track/1pcpE1kZDqm2PQ0EwIQGdE" target="_blank"
+                rel="noopener noreferrer">Noise Transmission</a>
+              <span class="tracktime">6:37</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <footer>
+        <div>April 4, 2026</div>
+        <div>© 2026 Opportunity Inc.</div>
+      </footer>
+    </div>
+  </div>
+
+  <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+  <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+        }
+      }
+    </script>
+
+  <script type="module">
+    import { initBackground } from './bg.js';
+    initBackground('canvas-container');
+  </script>
+</body>
+
+</html>
+

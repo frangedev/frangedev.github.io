@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRANGE | Projects</title>
+  <meta name="description" content="FRANGE projects on GitHub: tools, music tech, and experiments.">
+  <link rel="canonical" href="https://frangedev.github.io/projects.html">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:title" content="FRANGE — Projects">
+  <meta property="og:description" content="All public GitHub projects by FRANGE, updated live.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://frangedev.github.io/projects.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FRANGE — Projects">
+  <meta name="twitter:description" content="All public GitHub projects by FRANGE, updated live.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syncopate:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "FRANGE Projects",
+      "url": "https://frangedev.github.io/projects.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "FRANGE",
+        "url": "https://frangedev.github.io/"
+      }
+    }
+  </script>
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #050505;
+      color: #ffffff;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    #canvas-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    #ui-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      overflow-y: auto;
+      background:
+        radial-gradient(1100px 700px at 50% 0%, rgba(255, 255, 255, 0.10), transparent 60%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.72) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .top-nav {
+      width: min(1040px, calc(100% - 3rem));
+      margin: 2rem auto 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      pointer-events: auto;
+    }
+
+    .nav-left,
+    .nav-right {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+      font-size: 0.9rem;
+      transition: color 0.3s, text-shadow 0.3s;
+      padding: 10px 0;
+    }
+
+    .nav-link:hover {
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .container {
+      max-width: 1040px;
+      padding: 2.5rem 1.25rem 4rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-family: 'Syncopate', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 1.75rem 0 0.75rem;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      letter-spacing: 0.22rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.78);
+      letter-spacing: 0.16rem;
+      margin: 0 auto 2rem;
+      max-width: 860px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 1.75rem 0 1.25rem;
+      pointer-events: auto;
+    }
+
+    .search {
+      flex: 1 1 320px;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.75rem 0.85rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .search i {
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .search input {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.92);
+      font-family: inherit;
+      letter-spacing: 0.05rem;
+      font-size: 0.95rem;
+    }
+
+    .search input::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .meta {
+      color: rgba(255, 255, 255, 0.65);
+      letter-spacing: 0.08rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .card {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(6px);
+      padding: 1.15rem 1.15rem 1.25rem;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.9rem;
+    }
+
+    .card a.title {
+      color: rgba(255, 255, 255, 0.95);
+      text-decoration: none;
+      text-transform: none;
+      letter-spacing: 0.06rem;
+      font-weight: 700;
+      font-size: 1.02rem;
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card a.title:hover {
+      text-decoration: underline;
+    }
+
+    .desc {
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.65;
+      margin-top: 0.65rem;
+      font-size: 0.95rem;
+    }
+
+    .chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 0.75rem;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.85rem;
+      letter-spacing: 0.05rem;
+    }
+
+    .chip {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(0, 0, 0, 0.18);
+      padding: 0.35rem 0.55rem;
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+      white-space: nowrap;
+    }
+
+    .chip strong {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 700;
+    }
+
+    .status {
+      margin: 1.5rem 0 0;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .status a {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    @media (max-width: 1040px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .top-nav {
+        width: calc(100% - 2.25rem);
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="canvas-container"></div>
+
+  <div id="ui-layer">
+    <div class="top-nav">
+      <div class="nav-left">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="uzay-space.html" class="nav-link">UZAY // SPACE</a>
+      </div>
+      <div class="nav-right">
+        <a href="about.html" class="nav-link">About</a>
+        <a href="https://github.com/frangedev?tab=repositories" target="_blank" rel="noopener noreferrer"
+          class="nav-link">GitHub</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>Projects</h1>
+      <div class="subtitle">
+        A live list of all public repositories from <strong>github.com/frangedev</strong>.
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="q" type="search" placeholder="Search projects (name, description, language)..." autocomplete="off">
+        </div>
+        <div class="meta" id="meta">Loading…</div>
+      </div>
+
+      <div class="grid" id="grid" aria-live="polite"></div>
+      <div class="status" id="status"></div>
+    </div>
+  </div>
+
+  <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+  <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+        }
+      }
+    </script>
+  <script type="module">
+    import { initBackground } from './bg.js';
+    initBackground('canvas-container');
+
+    const API = 'https://api.github.com/users/frangedev/repos?per_page=100&sort=updated';
+
+    /** @type {Array<any>} */
+    let repos = [];
+
+    const $q = document.getElementById('q');
+    const $grid = document.getElementById('grid');
+    const $meta = document.getElementById('meta');
+    const $status = document.getElementById('status');
+
+    function fmtDate(iso) {
+      try {
+        const d = new Date(iso);
+        return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' });
+      } catch {
+        return '';
+      }
+    }
+
+    function render(list) {
+      $grid.innerHTML = list.map(r => {
+        const name = r.name ?? '';
+        const url = r.html_url ?? '#';
+        const desc = (r.description ?? '').trim();
+        const lang = r.language ?? '—';
+        const stars = r.stargazers_count ?? 0;
+        const updated = r.pushed_at ?? r.updated_at ?? '';
+        const fork = !!r.fork;
+        const archived = !!r.archived;
+
+        const chips = [
+          `<span class="chip"><strong>${lang}</strong></span>`,
+          `<span class="chip">★ <strong>${stars}</strong></span>`,
+          updated ? `<span class="chip">Updated <strong>${fmtDate(updated)}</strong></span>` : '',
+          fork ? `<span class="chip">Fork</span>` : '',
+          archived ? `<span class="chip">Archived</span>` : ''
+        ].filter(Boolean).join('');
+
+        return `
+          <div class="card">
+            <div>
+              <a class="title" href="${url}" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-github"></i>
+                <span>${name}</span>
+              </a>
+              ${desc ? `<div class="desc">${escapeHtml(desc)}</div>` : `<div class="desc">—</div>`}
+              <div class="chips">${chips}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      $meta.textContent = `${list.length} / ${repos.length} shown`;
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function filterAndRender() {
+      const q = ($q.value ?? '').trim().toLowerCase();
+      if (!q) {
+        render(repos);
+        return;
+      }
+      const list = repos.filter(r => {
+        const hay = [
+          r.name ?? '',
+          r.description ?? '',
+          r.language ?? ''
+        ].join(' ').toLowerCase();
+        return hay.includes(q);
+      });
+      render(list);
+    }
+
+    async function load() {
+      $status.textContent = '';
+      $meta.textContent = 'Loading…';
+      try {
+        const res = await fetch(API, { headers: { 'Accept': 'application/vnd.github+json' } });
+        if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+        const data = await res.json();
+        repos = (Array.isArray(data) ? data : [])
+          .filter(r => !r.private)
+          .sort((a, b) => (new Date(b.pushed_at ?? 0)).getTime() - (new Date(a.pushed_at ?? 0)).getTime());
+        render(repos);
+      } catch (e) {
+        $grid.innerHTML = '';
+        $meta.textContent = '—';
+        $status.innerHTML = `Could not load projects right now. You can still view them on <a href="https://github.com/frangedev?tab=repositories" target="_blank" rel="noopener noreferrer">GitHub</a>.`;
+        // Keep error in console for debugging.
+        console.error(e);
+      }
+    }
+
+    $q.addEventListener('input', filterAndRender);
+    load();
+  </script>
+</body>
+
+</html>
+
